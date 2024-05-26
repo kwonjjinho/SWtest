@@ -63,6 +63,15 @@
         <p>&copy; 2024 S/W 팀프로젝트</p>
     </footer>
     <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        // 로그인 버튼에 이벤트 리스너 추가
+        document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
+    </script>
     <script src="/js/scripts.js"></script>
 </body>
 </html>
