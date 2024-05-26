@@ -10,7 +10,8 @@
 <body>
     <header>
         <div class="minion-header">
-            <img src="publiic/images/minion_header.png" alt="Minion Header Image">
+            <img src="/images/minion_header.png" alt="Minion Header Image">
+
         </div>
         <h1>커뮤니티 및 문의 게시판, 라이브 채팅</h1>
     </header>
@@ -64,14 +65,22 @@
     </footer>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
-        function redirectToLogin() {
-            window.location.href = 'login.html';
-        }
-        
-        // 로그인 버튼에 이벤트 리스너 추가
-        document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
-    </script>
+    // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
+    function redirectToLogin() {
+        window.location.href = 'login.html';
+    }
+    
+    // 회원가입 버튼을 클릭하면 signup.html 페이지로 이동하는 함수
+    function redirectToSignup() {
+        window.location.href = 'signup.html';
+    }
+    // 로그인 버튼에 이벤트 리스너 추가
+    document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
+
+    // 회원가입 버튼에 이벤트 리스너 추가
+    document.querySelector('a[href="signup.html"]').addEventListener('click', redirectToSignup);
+</script>
+
     <script src="/js/scripts.js"></script>
 </body>
 </html>
