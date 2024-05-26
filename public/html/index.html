@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 S/W 팀 프로젝트</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/minions.css">
+</head>
+<body>
+    <header>
+        <div class="minion-header">
+            <img src="minion_header.png" alt="Minion Header Image">
+        </div>
+        <h1>커뮤니티 및 문의 게시판, 라이브 채팅</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#community">커뮤니티</a></li>
+            <li><a href="#inquiry">문의 게시판</a></li>
+            <li><a href="#chat">라이브 채팅</a></li>
+            <li><a href="#login">로그인</a></li>
+            <li><a href="#signup">회원가입</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="community">
+            <h2>커뮤니티</h2>
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
+            </div>
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
+            </div>
+        </section>
+        <section id="inquiry">
+            <h2>문의 게시판</h2>
+            <form id="inquiry-form">
+                <label for="name">이름:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">문의 내용:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit">제출</button>
+            </form>
+        </section>
+        <section id="chat">
+            <h2>라이브 채팅</h2>
+            <form id="chat-form">
+                <input id="username" type="text" placeholder="유저명" required>
+                <input id="chat-message" type="text" placeholder="메시지 입력" required>
+                <button type="submit">전송</button>
+            </form>
+            <ul id="messages"></ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 S/W 팀프로젝트</p>
+    </footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/scripts.js"></script>
+</body>
+</html>
+
