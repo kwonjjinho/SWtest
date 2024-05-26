@@ -6,12 +6,14 @@
     <title>2024 S/W 팀 프로젝트</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/minions.css">
+    <style>
+        /* 추가적인 CSS 스타일링 */
+    </style>
 </head>
 <body>
     <header>
         <div class="minion-header">
             <img src="/images/minion_header.png" alt="Minion Header Image">
-
         </div>
         <h1>커뮤니티 및 문의 게시판, 라이브 채팅</h1>
     </header>
@@ -20,9 +22,7 @@
             <li><a href="#community">커뮤니티</a></li>
             <li><a href="#inquiry">문의 게시판</a></li>
             <li><a href="#chat">라이브 채팅</a></li>
-            <!-- 로그인 페이지로 이동하는 링크 -->
             <li><a href="login.html">로그인</a></li>
-            <!-- 회원가입 페이지로 이동하는 링크 -->
             <li><a href="signup.html">회원가입</a></li>
         </ul>
     </nav>
@@ -65,24 +65,24 @@
     </footer>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
-    function redirectToLogin() {
-        window.location.href = 'login.html';
-    }
-    
-    // 회원가입 버튼을 클릭하면 signup.html 페이지로 이동하는 함수
-    function redirectToSignup() {
-        window.location.href = 'signup.html';
-    }
-    // 로그인 버튼에 이벤트 리스너 추가
-    document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
+        // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        // 회원가입 버튼을 클릭하면 signup.html 페이지로 이동하는 함수
+        function redirectToSignup() {
+            window.location.href = 'signup.html';
+        }
+        // 로그인 버튼에 이벤트 리스너 추가
+        document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
 
-    // 회원가입 버튼에 이벤트 리스너 추가
-    document.querySelector('a[href="signup.html"]').addEventListener('click', redirectToSignup);
-</script>
-
+        // 회원가입 버튼에 이벤트 리스너 추가
+        document.querySelector('a[href="signup.html"]').addEventListener('click', redirectToSignup);
+    </script>
     <script src="/js/scripts.js"></script>
 </body>
 </html>
+
 
 
