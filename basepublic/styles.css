@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('images/basemini.webp'); /* 배경 이미지 경로 */
+    background-size: cover; /* 배경 이미지가 화면을 꽉 채우도록 설정 */
+    background-position: center; /* 배경 이미지가 중앙에 위치하도록 설정 */
+    background-repeat: no-repeat; /* 배경 이미지가 반복되지 않도록 설정 */
+}
+
+.container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8); /* 약간의 투명도를 가진 흰색 배경 */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.status-bar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+}
+
+input, button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#history {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#history li {
+    margin: 5px 0;
+}

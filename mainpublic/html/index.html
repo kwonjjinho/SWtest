@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 S/W 팀 프로젝트</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/minions.css">
+    <style>
+        /* 추가적인 CSS 스타일링 */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="minion-header">
+            <img src="/images/minion_header.png" alt="Minion Header Image">
+        </div>
+        <h1>미니겜즈에 오신것을 환영합니다!</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#community">커뮤니티</a></li>
+            <li><a href="#inquiry">문의 게시판</a></li>
+            <li><a href="#chat">라이브 채팅</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signup.html">회원가입</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="games-section">
+            <h2>인기 게임</h2>
+            <div class="games-grid">
+                <div class="game">
+                    <img src="/images/gogunbuntu.png" href="baseball.html" alt="숫자야구">
+                    <h3>숫자야구</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/gamokthal_remaster.png" alt="감옥탈출 리마스터">
+                    <h3>감옥탈출 리마스터</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/shu_ramen.png" alt="슈의 라면가게">
+                    <h3>슈의 라면가게</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/bubble_shooter.png" alt="버블 슈터 (Bubble Shooter)">
+                    <h3>버블 슈터</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/pani_pang_full.png" alt="파니팡 파니하우스 풀버전">
+                    <h3>파니팡 파니하우스 풀버전</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/animal_rescue.png" alt="동물구출 대작전">
+                    <h3>동물구출 대작전</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/baekjoongthal_2.png" alt="백중탈출2 리메이크">
+                    <h3>백중탈출2 리메이크</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/escape1.png" alt="아이탈출1 - 탈출게임">
+                    <h3>아이탈출1 - 탈출게임</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/sakuranbo_ddr.png" alt="사쿠란보 DDR">
+                    <h3>사쿠란보 DDR</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/zombie_highschool.png" alt="죽림고수">
+                    <h3>죽림고수</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/butterfly.png" alt="버터플라이">
+                    <h3>버터플라이</h3>
+                </div>
+                <div class="game">
+                    <img src="/images/penguinpong.png" alt="펭귄콩콩">
+                    <h3>펭귄콩콩 - 야후꾸러기 마법학교 미니게임</h3>
+                </div>
+            </div>
+        </section>
+        <section id="community">
+            <h2>커뮤니티</h2>
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
+            </div>
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
+            </div>
+        </section>
+        <section id="inquiry">
+            <h2>문의 게시판</h2>
+            <form id="inquiry-form">
+                <label for="name">이름:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">문의 내용:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit">제출</button>
+            </form>
+        </section>
+        <section id="chat">
+            <h2>라이브 채팅</h2>
+            <form id="chat-form">
+                <input id="username" type="text" placeholder="유저명" required>
+                <input id="chat-message" type="text" placeholder="메시지 입력" required>
+                <button type="submit">전송</button>
+            </form>
+            <ul id="messages"></ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 S/W 팀프로젝트</p>
+    </footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // 로그인 버튼을 클릭하면 login.html 페이지로 이동하는 함수
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        // 회원가입 버튼을 클릭하면 signup.html 페이지로 이동하는 함수
+        function redirectToSignup() {
+            window.location.href = 'signup.html';
+        }
+        // 로그인 버튼에 이벤트 리스너 추가
+        document.querySelector('a[href="login.html"]').addEventListener('click', redirectToLogin);
+
+        // 회원가입 버튼에 이벤트 리스너 추가
+        document.querySelector('a[href="signup.html"]').addEventListener('click', redirectToSignup);
+    </script>
+    <script src="/js/scripts.js"></script>
+</body>
+</html>
+
+
+

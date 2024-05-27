@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up 페이지 (feat. MySQL, NodeJS)</title>
+    <!-- 눈까리코드 -->
+    <style>   
+        .password-container {
+            position: relative;
+            display: inline-block;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    
+        #idCheckResult {
+            font-weight: bold;
+        }
+        #idCheckResult.duplicate {
+            color: red;
+        }
+
+        #idCheckResult.not_duplicate {
+            color: blue;
+         }
+    </style>
+</head>
+<body>
+    <h1>사용자 등록 페이지</h1>
+    <br>
+    <form method="post" action="/process/adduser" name="join">
+        <table>
+            <tr>
+                <td><label>사용자명</label></td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td><label>닉네임</label></td>
+                <td><input type="text" name="nickname"></td>
+            </tr>
+            <tr>
+                <td><label>아이디</label></td>
+                <td><input type="text" name="id" id="userId"></td>
+                <td><button type="button" onclick="checkDuplicate()">중복 확인</button></td>
+                <td><span id="idCheckResult"></span></td>
+            </tr>
+        </table>
+        <form name="join">
+            <div class="password-container">
+                패스워드: <input type="password" id="password1" name="password">
+                <span class="toggle-password" onclick="togglePassword('password1')">👁️</span>
+            </div>
+            <div class="password-container">
+                패스워드 확인: <input type="password" id="password2">
+        
+            </div>
+        </form>
+        <input type="button" onclick="test()" value="회원가입">
+    </form>
+    <script>  // 눈까리코드
+        function togglePassword(fieldId) {
+            var passwordField = document.getElementById(fieldId);
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+            } else {
+                passwordField.setAttribute('type', 'password');
+            }
+        }
+
+        function test() {
+            var p1 = document.getElementById('password1').value;
+            var p2 = document.getElementById('password2').value;
+        
+            if (p1 !== p2) {
+                alert("패스워드 불일치");
+                return false;
+            } else {
+                alert("패스워드가 일치합니다");
+                document.forms['join'].submit(); // 폼 제출
+            }
+        }
+        
+        function checkDuplicate() {
+            var userId = document.getElementById('userId').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/process/checkduplicate', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    var idCheckResult = document.getElementById('idCheckResult');
+                    idCheckResult.innerText = response === 'duplicate' ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.';
+                    idCheckResult.className = response;
+                }
+            };
+            xhr.send('id=' + encodeURIComponent(userId));
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자 야구 게임</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>숫자 야구</h1>
+        <div class="status-bar">
+            <span id="attemptsLeft">남은 횟수: 10</span>
+        </div>
+        <input type="text" id="guessInput" maxlength="4" placeholder="숫자를 입력하세요(0포함)">
+        <button id="guessButton">추측하기</button>
+        <div id="result"></div>
+        <ul id="history"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

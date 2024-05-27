@@ -1,0 +1,137 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #ffd200; /* Yellow */
+    color: #005cff; /* Blue */
+    padding: 20px 0;
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+}
+nav {
+    background-color: #ffd200; /* Yellow */
+    color: #000; /* Black */
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #000; /* Black */
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+.games-section {
+    text-align: center;
+}
+.games-section h2 {
+    margin-bottom: 20px;
+}
+.games-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.game {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.game img {
+    width: 100%;
+    border-radius: 5px;
+}
+.game h3 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+section {
+    margin-bottom: 2em;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #005cff; /* Blue */
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+form {
+    background-color: #fff;
+    border: 1px solid #005cff; /* Blue */
+    padding: 1em;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #005cff; /* Blue */
+}
+
+form button {
+    background-color: #3a3a3a; /* Dark Grey */
+    color: #fff; /* White */
+    padding: 0.5em 1em;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #ffd200; /* Yellow */
+    color: #000; /* Black */
+    text-align: center;
+    padding: 1em 0;
+}
+
+/* Header Styling */
+.minion-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.minion-header img {
+    max-width: 100%;
+}
+
+/* Navigation Styling */
+nav ul li a[href="#login"],
+nav ul li a[href="#signup"] {
+    background-color: #ffd200; /* Yellow */
+    color: #000; /* Black */
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+nav ul li a[href="#login"]:hover,
+nav ul li a[href="#signup"]:hover {
+    background-color: #005cff; /* Blue */
+    color: #fff; /* White */
+}

@@ -1,9 +1,9 @@
 {
-  "name": "2024swteamprj_1",
+  "name": "numbaseball",
   "version": "1.0.0",
-  "description": "S/W TeamPrj",
-  "main": "server.js",
+  "main": "script.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
+    "mysql": "^2.18.1",
+    "package": "^1.0.1",
     "socket.io": "^4.7.5"
-  }
+  },
+  "description": ""
 }
