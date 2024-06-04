@@ -17,14 +17,6 @@ function togglePassword(fieldId) {
 
 function checkDuplicate() {
     var userId = document.getElementById('userId').value;
-    var idCheckResult = document.getElementById('idCheckResult');
-
-    if (userId === "") {
-        idCheckResult.innerText = "";
-        idCheckResult.className = "";
-        return;
-    }
-
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/process/checkduplicate', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -37,29 +29,6 @@ function checkDuplicate() {
         }
     };
     xhr.send('id=' + encodeURIComponent(userId));
-}
-
-function checkNickname() {
-    var nickname = document.getElementById('nickname').value;
-    var nicknameCheckResult = document.getElementById('nicknameCheckResult');
-
-    if (nickname === "") {
-        nicknameCheckResult.innerText = "";
-        nicknameCheckResult.className = "";
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/process/checknickname', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            var response = xhr.responseText;
-            nicknameCheckResult.innerText = response === 'duplicate' ? '이미 사용 중인 닉네임입니다.' : '사용 가능한 닉네임입니다.';
-            nicknameCheckResult.className = response;
-        }
-    };
-    xhr.send('nickname=' + encodeURIComponent(nickname));
 }
 
 function setAnswerInputName() {
@@ -76,13 +45,6 @@ function submitForm() {
         alert('비밀번호가 일치하지 않습니다.');
         return false;
     }
-
-    // 비밀번호 검증 코드
-    if (!/^[A-Za-z0-9]{4,15}$/.test(p1)) {
-        alert('패스워드는 4~15자리의 영어와 숫자만 가능합니다.');
-        return false;
-    }
-
     var form = document.getElementById('signupForm');
     var formData = new FormData(form);
     var xhr = new XMLHttpRequest();
@@ -101,7 +63,7 @@ function submitForm() {
                 // redirect
                 setTimeout(() => {
                     window.location.href = response.redirectUrl;
-                }, 1500); // 애니메이션 후에 리디렉션
+                }, 3000); // 애니메이션 후에 리디렉션
             }
         }
     };
@@ -113,17 +75,14 @@ function submitForm() {
 
 let particles = [];
 const colors = ["#eb6383","#fa9191","#ffe9c5","#b4f2e1"];
-
 function pop() {
     for (let i = 0; i < 150; i++) {
         const p = document.createElement('particule');
-        p.style.position = 'fixed'; 
-        p.style.pointerEvents = 'none'; 
         p.x = window.innerWidth * 0.5;
         p.y = window.innerHeight + (Math.random() * window.innerHeight * 0.3);
         p.vel = {
-            x: (Math.random() - 0.5) * 30, //x속도 (빠를수록 널리퍼짐)
-            y: Math.random() * -25 - 20 //y속도 (속도줄여서 천천히 떨어지게)
+            x: (Math.random() - 0.5) * 10,
+            y: Math.random() * -20 - 15
         };
         p.mass = Math.random() * 0.2 + 0.8;
         particles.push(p);
@@ -132,7 +91,6 @@ function pop() {
         p.style.width = size + 'px';
         p.style.height = size + 'px';
         p.style.background = colors[Math.floor(Math.random() * colors.length)];
-        p.style.borderRadius = '50%'
         document.body.appendChild(p);
     }
 }
@@ -145,15 +103,11 @@ function render() {
         p.x += p.vel.x;
         p.y += p.vel.y;
         
-        p.vel.y += 1.0;
-        p.vel.x *= 0.99;
-        if (p.y > window.innerHeight * 1.5) {
+        p.vel.y += (0.5 * p.mass);
+        if (p.y > (window.innerHeight * 2)) {
             p.remove();
             particles.splice(i, 1);
         }
     }
-    if (particles.length > 0) {
-        requestAnimationFrame(render);
-    }
+    requestAnimationFrame(render); // 계속해서 render 함수를 호출하도록 수정
 }
-

@@ -10,7 +10,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
 * {
-    font-family: "Gamja Flower", sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -51,7 +51,6 @@ html, body {
     position: relative;
     width: 100%;
     margin: 1rem 0;
-    font-size: 20px;  /*본인 확인 질문*/
 }
 
 .input-group i {
@@ -66,7 +65,7 @@ html, body {
 .input-group input {
     width: 100%;
     padding: 1rem 3rem;
-    font-size: 25px;       /*폰트 크기변경*/
+    font-size: 1rem;
     background-color: var(--gray);
     border-radius: .5rem;
     border: 0.125rem solid var(--white);
@@ -85,30 +84,10 @@ html, body {
     border: none;
     background-color: var(--secondary-color);
     color: var(--white);
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     outline: none;
 }
-.adduser1 {
-    position: absolute;
-    top: 70%;
-    right: -310px; /* 폼 오른쪽에 배치 */
-    width: 310px; /* 이미지 너비 조정 */
-    transform: translateY(-50%);
-}
-.adduser2 {
-    position: absolute;
-    top: 29.5%;
-    right: 360px; /* 폼 오른쪽에 배치 */
-    width: 425px; /* 이미지 너비 조정 */
-    transform: translateY(-50%);
-}
-.adduser3 {
-    position: absolute;
-    top: 86.5%;
-    right: 360px; /* 폼 오른쪽에 배치 */
-    width: 425px; /* 이미지 너비 조정 */
-    transform: translateY(-50%);
-}
+
 .minion {
     position: absolute;
     top: -214px;

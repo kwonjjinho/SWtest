@@ -43,4 +43,19 @@ socket.on('chat message', function(msg) {
     item.textContent = msg;
     messages.appendChild(item);
 });
+app.get('/api/profile', (req, res) => {
+    if (req.session.user) {
+        res.json({ nickname: req.session.user.nickname });
+    } else {
+        res.status(401).send('Not logged in');
+    }
+});
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Logout failed');
+        }
+        res.send('Logged out');
+    });
+});
 

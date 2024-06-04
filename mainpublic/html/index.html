@@ -5,35 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2024 S/W 팀 프로젝트</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/minions.css">
     <style>
-
-        .hidden {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .minion-header img {
-            height: auto;
-            display: block;
-            margin: 0; /* 이미지 주변의 여백 제거 */
-            min-width: 100%;
-            opacity: 0.9; 
-        }
-
-        .spacer {
-            height: 200px;
-        }
-        nav * {
-            font-family: "Gamja Flower", cursive;
-        }
+        /* 추가적인 CSS 스타일링 */
     </style>
 </head>
 <body>
@@ -41,7 +15,7 @@
         <nav>
             <div class="logo">
                 <a href="/">
-                    <h2>Mini Gamz</h2>
+                 <h2>Mini Gemz</h2>
                 </a>
             </div>
             <div class="menu">
@@ -59,178 +33,120 @@
             </div>
         </nav>
         <div class="minion-header">
-            <img src="/images/minionfull3.jpg" alt="Minion Header Image">
-            <div class="text-overlay">
-                <h1>MiniGamz</h1>
-                <h1>MiniGamz</h1>
-            </div>
+            <img src="/images/minion_header.png" alt="Minion Header Image">
         </div>
     </header>
     
     <main>
-
-
-        
-        <div class="content-section hidden">
-            <ul class="ch-grid">
-                <li>
-                
-                        </div>
+        <section class="games-section">
+            <h2>인기 게임</h2>
+                <div class="games-grid">
+                    <div class="game">
+                        <a href="baseball.html">
+                        <img src="/images/baseball.png" alt="숫자야구">
+                        </a> 
+                        <a href="baseball.html">
+                         <h3>숫자야구</h3>
+                        </a> 
                     </div>
-                </li>
-                <div class="content-section hidden">
-                    <ul class="ch-grid">
-                        <li>
-                            <div class="ch-item">
-                                <div class="ch-info" onclick="location.href='baseball.html'">
+                    <div class="game">
 
-                                    <div class="ch-info-front">
-                                        <img src="/images/baseball.png" alt="야구게임" style="width: 100%; height: auto;">
-                                        <h4 style="margin-top: 0;">숫자 야구!</h4>
-                                    </div>
-                                    <div class="ch-info-back">
-                                        <img src="/images/banana.png" style="width: 90%; height: 190px;">
-                                        <h4 style="margin-top: 0;">game start!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="ch-item">
-                                <div class="ch-info" onclick="location.href='minionbird.html'">
-                                    <div class="ch-info-front">
-                                        <img src="/images/minionbird.png" alt="미니언버드" style="width: 100%; height: auto;">
-                                        <h4 style="margin-top: 0;">미니언 버드!</h4>
-                                    </div>
-                                    <div class="ch-info-back">
-                                        <img src="/images/banana.png" style="width: 90%; height: 190px;">
-                                        <h4 style="margin-top: 0;">game start!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="ch-item">
-                                <div class="ch-info" onclick="location.href='shooting.html'">
-
-                                    <div class="ch-info-front">
-                                        <img src="/images/shooting.png" alt="슈팅게임" style="width: 100%; height: auto;">
-                                        <h4 style="margin-top: 0;">슈팅게임!</h4>
-                                    </div>
-                                    <div class="ch-info-back">
-                                        <img src="/images/banana.png" style="width: 90%; height: 190px;">
-                                        <h4 style="margin-top: 0;">game start!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="ch-item">
-                                <div class="ch-info" onclick="location.href='minionjump.html'">
-
-                                    <div class="ch-info-front">
-                                        <img src="/images/minionjumppage.png" alt="미니언점프게임" style="width: 100%; height: auto;">
-                                        <h4 style="margin-top: 0;">미니언 점핑!</h4>
-                                    </div>
-                                    <div class="ch-info-back">
-                                        <img src="/images/banana.png" style="width: 90%; height: 190px;">
-                                        <h4 style="margin-top: 0;">game start!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="ch-item">
-                                <div class="ch-info" onclick="location.href='baseball.html'">
-
-                                    <div class="ch-info-front">
-                                        <img src="/images/baseball.png" alt="야구게임" style="width: 100%; height: auto;">
-                                        <h4 style="margin-top: 0;">야구게임</h4>
-                                    </div>
-                                    <div class="ch-info-back">
-                                        <img src="/images/banana.png" style="width: 90%; height: 190px;">
-                                        <h4 style="margin-top: 0;">game start!</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                
-        
-        <div class="spacer"></div>
-        <div class="spacer"></div>
-         <div class="container">
-            <div class="content-section hidden" id="community">
-                <img src="/images/twomini.png" alt="고정 이미지" style="width: 40%; display: block; margin: auto;">
-                <h2 style="margin-bottom: 20px; padding-left: 10px;">커뮤니티</h2>
-                <div class="post"style="margin-bottom: 20px;">
-                    <h3>게시물 제목</h3>
-                    <p>내용</p>
-                </div>
-                <div class="post">
-                    <h3>게시물 제목</h3>
-                    <p>내용</p>
-                </div>
-            </div>
-
-            <div class="spacer"></div>
-            <div class="spacer"></div>
-            
-            <div class="content-section hidden" id="community">
-                    <div class="inquiry-form">
-                        <img src="/images/threemini.png" alt="고정 이미지"  style="width: 50%; display: block; margin: auto;margin-top: -55px;">
-                        <h1 style="margin-bottom: 20px; padding-left: 10px;">문의 게시판</h1>
-                        <form id="inquiry-form">
-                            <div class="input-group">
-                                <i class='bx bxs-user'></i>
-                                <input type="text" placeholder="이름" name="name" id="name" required style="font-size: 24px;">
-                            </div>
-                            <div class="input-group">
-                                <i class='bx bxs-envelope'></i>
-                                <input type="email" placeholder="이메일" name="email" id="email" required style="font-size: 24px;">
-                            </div>
-                            <div class="input-group">
-                                <i class='bx bxs-message-alt'></i>
-        
-                                <textarea placeholder="문의 내용" name="message" id="message" rows="4" required style="font-size: 24px;"></textarea>
-                            </div>
-                            <button type="submit" style = "width: 100px;font-size: 16px; ">제출</button>
-                        </form>
+                        <a href="minionbird.html">
+                         <img src="/images/minionbird.png" alt="미니언 버드">
+                        </a> 
+                        <a href="minionbird.html">
+                         <h3>미니언 버드</h3>
+                        </a> 
+                    </div>   
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="슈의 라면가게">
+                        <h3>슈의 라면가게</h3>
+                    </div>
+                    <div class="game">
+                       <img src="/images/ex1.png" alt="버블 슈터 (Bubble Shooter)">
+                        <h3>버블 슈터</h3>
+                    </div>
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="파니팡 파니하우스 풀버전">
+                        <h3>파니팡 파니하우스 풀버전</h3>
+                    </div>
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="동물구출 대작전">
+                        <h3>동물구출 대작전</h3>
+                    </div>
+                    <div class="game">
+                       <img src="/images/ex1.png" alt="백중탈출2 리메이크">
+                        <h3>백중탈출2 리메이크</h3>
+                    </div>
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="아이탈출1 - 탈출게임">
+                        <h3>아이탈출1 - 탈출게임</h3>
+                    </div>
+                    <div class="game">
+                      <img src="/images/ex1.png" alt="사쿠란보 DDR">
+                      <h3>사쿠란보 DDR</h3>
+                    </div>
+                    <div class="game">
+                     <img src="/images/ex1.png" alt="죽림고수">
+                     <h3>죽림고수</h3>
+                    </div>
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="버터플라이">
+                        <h3>버터플라이</h3>
+                    </div>
+                    <div class="game">
+                        <img src="/images/ex1.png" alt="펭귄콩콩">
+                        <h3>펭귄콩콩 - 야후꾸러기 마법학교 미니게임</h3>
                     </div>
                 </div>
+        </section>
+        <section id="community">
+            <h2>커뮤니티</h2>
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
             </div>
-            
-            <div class="spacer"></div>
-
-        
-                <div id="toggle-chat" class="chat-container">
-                    <section id="chat">
-                        <h2>라이브 채팅</h2>
-                        <ul id="messages"></ul>
-                        <form id="chat-form">
-                            <input id="username" type="text" placeholder="유저명" required>
-                            <input id="chat-message" type="text" placeholder="메시지 입력" required>
-                            <button type="submit">전송</button>
-                        </form>
-                    </section>
-                </div>
-             </div>
-            <script src="/socket.io/socket.io.js"></script>
-        <button id="toggle-chat-btn" data-open-text="라이브 채팅 열기">닫기</button>
-    </main>
-        
-
-    
+            <div class="post">
+                <h3>게시물 제목</h3>
+                <p>내용</p>
+            </div>
+        </section>
+        <section id="inquiry">
+            <h2>문의 게시판</h2>
+            <form id="inquiry-form">
+                <label for="name">이름:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">문의 내용:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit">제출</button>
+            </form>
+        </section>
+        <div id="toggle-chat" class="chat-container">
+            <section id="chat">
+                <h2>라이브 채팅</h2>
+                <ul id="messages"></ul>
+                <form id="chat-form">
+                    <input id="username" type="text" placeholder="유저명" readonly required>
+                    <input id="chat-message" type="text" placeholder="메시지 입력" required>
+                    <button type="submit">전송</button>
+                </form>
+            </section>
+        </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <button id="toggle-chat-btn" data-open-text="라이브 채팅 열기">닫기</button>
     <script>
         function checkLoginStatus() {
             fetch('/api/profile')
-                .then(response => {
-                    if (response.ok) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.nickname) {
                         document.getElementById('authMenu').innerHTML = `
                             <li><a href="#" id="logoutLink">로그아웃</a></li>
                         `;
                         document.getElementById('logoutLink').addEventListener('click', logout);
+                        document.getElementById('username').value = data.nickname;
                     } else {
                         document.getElementById('authMenu').innerHTML = `
                             <li><a href="login.html" id="loginLink">로그인</a></li>
@@ -239,7 +155,7 @@
                     }
                 })
                 .catch(error => {
-                    console.error('로그인 상태 확인 중 오류 발생:', error);
+                    console.error('Error checking login status:', error);
                 });
         }
 
@@ -249,11 +165,11 @@
                     if (response.ok) {
                         window.location.href = '/';
                     } else {
-                        console.error('로그아웃 실패');
+                        console.error('Logout failed');
                     }
                 })
                 .catch(error => {
-                    console.error('로그아웃 중 오류 발생:', error);
+                    console.error('Error logging out:', error);
                 });
         }
 
@@ -267,37 +183,15 @@
                     }
                 })
                 .catch(error => {
-                    console.error('프로필 확인 중 오류 발생:', error);
+                    console.error('Error checking profile:', error);
                     window.location.href = 'login.html';
                 });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-    // 기존 기능
-    checkLoginStatus();
-    document.getElementById('profileLink').addEventListener('click', redirectToProfile);
-
-    // 애니메이션 효과 적용
-    const sections = document.querySelectorAll('.content-section');
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            } else {
-                entry.target.classList.remove('visible');
-            }
+            checkLoginStatus();
+            document.getElementById('profileLink').addEventListener('click', redirectToProfile);
         });
-    }, {
-        threshold: 0.1
-    });
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    // 라이브 채팅창 토글 기능 추가
-
-});
     </script>
     <script src="/js/scripts.js"></script>
 </body>

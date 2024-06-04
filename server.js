@@ -41,11 +41,11 @@ pool.getConnection((err, conn) => {
     }
 
     const createDatabaseQuery = `
-    CREATE DATABASE IF NOT EXISTS user;
+    CREATE DATABASE IF NOT EXISTS test;
     `;
 
     const useDatabaseQuery = `
-    USE user;
+    USE test;
     `;
     
     const createTableQuery = `
@@ -59,8 +59,7 @@ pool.getConnection((err, conn) => {
         alias varchar(300) DEFAULT NULL COMMENT '본인확인 별명',
         travel varchar(300) DEFAULT NULL COMMENT '본인확인 여행',
         movie varchar(300) DEFAULT NULL COMMENT '본인확인 영화',
-        PRIMARY KEY (id),
-        UNIQUE KEY unique_nickname (nickname)
+        PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     `;
     conn.query(createTableQuery, (err, result) => {
@@ -73,15 +72,13 @@ pool.getConnection((err, conn) => {
     });
 });
 
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'mainpublic')));
 app.use(express.static(path.join(__dirname, 'basepublic')));
 app.use(express.static(path.join(__dirname, 'dbpublic')));
 app.use(express.static(path.join(__dirname, 'minion-bird-public/public')));
-app.use(express.static(path.join(__dirname, 'shootingpublic')));
-app.use(express.static(path.join(__dirname, 'minion-jump-public')));
+
 // adminpublic 폴더를 /admin 경로로 서빙
 app.use('/admin', express.static(path.join(__dirname, 'adminpublic')));
 
@@ -103,14 +100,8 @@ app.get('/signup.html', (req, res) => {
 app.get('/baseball.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'basepublic/html', 'baseball.html'));
 });
-app.get('/shooting', (req, res) => {
-    res.sendFile(path.join(__dirname, 'shootingpublic/html', 'shooting.html'));
-  });
 app.get('/minionbird.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'minion-bird-public/public/html', 'minionbird.html'));
-});
-app.get('/minionjump', (req, res) => {
-    res.sendFile(path.join(__dirname, 'minion-jump-public', 'minionjump.html'));
 });
 app.get('/inquiry.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'inquiry/html', 'inquiry.html'));
@@ -125,6 +116,7 @@ app.get('/profile.html', (req, res) => {
         res.redirect('/login.html?redirectUrl=/profile.html'); // 로그인하지 않은 경우 로그인 페이지로 리디렉션
     }
 });
+
 // /admin 경로로 admin.html 파일 제공
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'adminpublic', 'admin.html'));
@@ -221,34 +213,6 @@ app.post('/process/login', (req, res) => {
     });
 });
 
-app.post('/process/checknickname', (req, res) => {
-    const nickname = req.body.nickname;
-
-    pool.getConnection((err, conn) => {
-        if (err) {
-            console.log('Mysql getConnection error:', err);
-            res.status(500).send('서버 에러');
-            return;
-        }
-
-        conn.query('SELECT * FROM users WHERE nickname = ?', nickname, (err, rows) => {
-            conn.release();
-
-            if (err) {
-                console.log('Mysql query error:', err);
-                res.status(500).send('서버 에러');
-                return;
-            }
-
-            if (rows.length > 0) {
-                res.send('duplicate');
-            } else {
-                res.send('not_duplicate');
-            }
-        });
-    });
-});
-
 app.post('/process/checkduplicate', (req, res) => {
     const userId = req.body.id;
 
@@ -280,15 +244,7 @@ app.post('/process/checkduplicate', (req, res) => {
 app.post('/process/adduser', (req, res) => {
     console.log('/process/adduser 호출됨');
     const { nickname, name, id, password, highschool, person, alias, travel, movie } = req.body;
-    // 아이디 자릿수 제한 제거, 영어와 숫자만 체크
-    if (!/^[A-Za-z0-9]+$/.test(id)) {
-        return res.json({ success: false, message: '아이디는 영어와 숫자만 가능합니다.' });
-    }
 
-    // 비밀번호 자릿수 제한 유지
-    if (!/^[A-Za-z0-9]{4,15}$/.test(password)) {
-        return res.json({ success: false, message: '패스워드는 4~15자리의 영어와 숫자만 가능합니다.' });
-    }
     pool.getConnection((err, conn) => {
         if (err) {
             console.log('Mysql getConnection error. aborted');
@@ -434,4 +390,3 @@ app.post('/logout', (req, res) => {
 server.listen(PORT, () => {
     console.log(`http://localhost:${PORT} 에서 실행 중..`);
 });
-
