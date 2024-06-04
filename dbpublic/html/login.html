@@ -2,24 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign IN 페이지 (feat. MySQL, NodeJS)</title>
+    <title>Sign In 페이지 (feat. MySQL, NodeJS)</title>
+    <link rel="stylesheet" href="/css/jstyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>사용자 로그인</h1>
-    <br>
-    <form method="post" action="/process/login">
-        <table>
-            <tr>
-                <td><label>아이디</label></td>
-                <td><input type="id" name="id"></td>
-            </tr>
-            <tr>
-                <td><label>패스워드</label></td>
-                <td><input type="password" name="password"></td>
-            </tr>
-        </table>
-        <input type="submit" value="로그인">
-        </form>
-    
+    <div class="container" id="container">
+        <div class="form-wrapper">
+            <img src="/images/idmini.png" alt="Minion" class="minion">
+            <div class="form sign-in">
+                <h1>사용자 로그인</h1>
+                <form id="loginForm" method="post" action="/process/login" onsubmit="handleSubmit(event)">
+                    <input type="hidden" name="redirectUrl" value="">
+                    <div class="input-group">
+                        <i class='bx bxs-user'></i>
+                        <input type="text" placeholder="아이디" name="id" required>
+                    </div>
+                    <div class="input-group">
+                        <i class='bx bxs-lock-alt'></i>
+                        <input type="password" placeholder="패스워드" name="password" id="password" required>
+                        <span class="toggle-password"></span>
+                    </div>
+                    <button type="submit">로그인</button>
+                    <audio id="sound" src="/sound/halo.mp3" preload="auto"></audio>
+                </form>
+                <p style="margin-top: 30px; font-size: 18px;">
+                    <span>비밀번호를 잊으셨나요?</span>
+                    <b onclick="findPassword()" class="pointer">find ID/PASSWORD</b>
+                </p>
+                <p style="font-size: 18px;">
+                    <span>계정이 없으신가요?</span>
+                    <b onclick="redirectToSignup()" class="pointer">sign up</b>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let container = document.getElementById('container');
+
+        const toggle = () => {
+            container.classList.toggle('sign-in');
+            container.classList.toggle('sign-up');
+        }
+
+        setTimeout(() => {
+            container.classList.add('sign-in');
+        }, 200);
+
+        const togglePassword = () => {
+            const passwordField = document.getElementById('password');
+            const passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+            } else {
+                passwordField.setAttribute('type', 'password');
+            }
+        }
+
+        const redirectToSignup = () => {
+            window.location.href = 'signup.html';
+        }
+
+        const findPassword = () => {
+            window.location.href = 'find.html'; // 이 줄을 수정하여 비밀번호 찾기 페이지로 리다이렉트
+        }
+
+        const playSound = () => {
+            const sound = document.getElementById('sound');
+            if (sound.paused) {
+                sound.currentTime = 0; // 처음부터 재생
+                sound.play().catch(error => {
+                    console.error('Failed to play sound:', error);
+                });
+            }
+        }
+
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            playSound();
+            const form = document.getElementById('loginForm');
+            setTimeout(() => form.submit(), 500); // 약간의 지연 후 폼을 제출하여 소리가 끝날 때까지 기다림
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const redirectUrl = params.get('redirectUrl') || '/';
+            document.querySelector('input[name="redirectUrl"]').value = redirectUrl;
+        });
+    </script>
 </body>
 </html>

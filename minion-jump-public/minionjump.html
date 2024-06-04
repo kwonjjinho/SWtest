@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minion Jump gmae</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <button id="mainButton">뒤로 가기</button>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="buttons">
+        <button id="startButton">게임 시작</button>
+        <button id="pauseButton" style="display: none;">
+            <img src="jumpimg/pause.png" alt="Pause" style="width: 30px; height: 30px;">
+        </button>
+        <button id="resumeButton" style="display: none;">
+            <img src="jumpimg/resume.png" alt="Resume" style="width: 30px; height: 30px;">
+        </button>
+        <button id="restartButton" style="display: none;">
+            <img src="jumpimg/restart.png" alt="Restart" style="width: 30px; height: 30px;">
+        </button>
+    </div>
+    <div id="rankings"></div>
+    <script src="jumpgame.js"></script>
+</body>
+</html>

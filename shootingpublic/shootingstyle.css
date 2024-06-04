@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('shootingimages/background1.png'); /* 배경 이미지 경로 설정 */
+  background-size: cover; /* 배경 이미지 크기 설정 */
+  background-position: center; /* 배경 이미지 위치 설정 */
+  #startButton {
+    padding: 20px 40px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+}

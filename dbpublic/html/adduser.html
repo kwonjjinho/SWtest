@@ -2,105 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign up 페이지 (feat. MySQL, NodeJS)</title>
-    <!-- 눈까리코드 -->
-    <style>   
-        .password-container {
-            position: relative;
-            display: inline-block;
-        }
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-    
-        #idCheckResult {
-            font-weight: bold;
-        }
-        #idCheckResult.duplicate {
-            color: red;
-        }
-
-        #idCheckResult.not_duplicate {
-            color: blue;
-         }
-    </style>
+    <title>Sign Up 페이지 (feat. MySQL, NodeJS)</title>
+    <link rel="stylesheet" href="/css/jstyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>사용자 등록 페이지</h1>
-    <br>
-    <form method="post" action="/process/adduser" name="join">
-        <table>
-            <tr>
-                <td><label>사용자명</label></td>
-                <td><input type="text" name="name"></td>
-            </tr>
-            <tr>
-                <td><label>닉네임</label></td>
-                <td><input type="text" name="nickname"></td>
-            </tr>
-            <tr>
-                <td><label>아이디</label></td>
-                <td><input type="text" name="id" id="userId"></td>
-                <td><button type="button" onclick="checkDuplicate()">중복 확인</button></td>
-                <td><span id="idCheckResult"></span></td>
-            </tr>
-        </table>
-        <form name="join">
-            <div class="password-container">
-                패스워드: <input type="password" id="password1" name="password">
-                <span class="toggle-password" onclick="togglePassword('password1')">👁️</span>
-            </div>
-            <div class="password-container">
-                패스워드 확인: <input type="password" id="password2">
-        
-            </div>
-        </form>
-        <input type="button" onclick="test()" value="회원가입">
-    </form>
-    <script>  // 눈까리코드
-        function togglePassword(fieldId) {
-            var passwordField = document.getElementById(fieldId);
-            var passwordFieldType = passwordField.getAttribute('type');
-            if (passwordFieldType === 'password') {
-                passwordField.setAttribute('type', 'text');
-            } else {
-                passwordField.setAttribute('type', 'password');
-            }
-        }
-
-        function test() {
-            var p1 = document.getElementById('password1').value;
-            var p2 = document.getElementById('password2').value;
-        
-            if (p1 !== p2) {
-                alert("패스워드 불일치");
-                return false;
-            } else {
-                alert("패스워드가 일치합니다");
-                document.forms['join'].submit(); // 폼 제출
-            }
-        }
-        
-        function checkDuplicate() {
-            var userId = document.getElementById('userId').value;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/process/checkduplicate', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    var response = xhr.responseText;
-                    var idCheckResult = document.getElementById('idCheckResult');
-                    idCheckResult.innerText = response === 'duplicate' ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.';
-                    idCheckResult.className = response;
-                }
-            };
-            xhr.send('id=' + encodeURIComponent(userId));
-        }
-    </script>
+    <div class="container">
+        <div class="form-wrapper">
+            <img src="/images/adduser1.png" alt="Minion" class="adduser1">
+            <img src="/images/adduser2.png" alt="Minion" class="adduser2">
+            <img src="/images/adduser3.png" alt="Minion" class="adduser3">
+            <div class="form sign-up"></div>
+            <h1>사용자 등록 페이지</h1>
+            <form method="post" action="/process/adduser" name="join" class="form" id="signupForm">
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" placeholder="사용자명" name="name">
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" placeholder="닉네임" name="nickname" id="nickname" oninput="checkNickname()">
+                    <span id="nicknameCheckResult"></span>
+                </div>                
+                <div class="input-group">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" placeholder="아이디" name="id" id="userId" pattern="[A-Za-z0-9]+" title="아이디는 영어와 숫자만 가능합니다.">
+                    <button type="button" onclick="checkDuplicate()">중복 확인</button>
+                    <span id="idCheckResult"></span>
+                </div>
+                <div class="password-container">
+                    <div class="input-group">
+                        <i class='bx bxs-lock-alt'></i>
+                        <input type="password" id="password1" name="password" placeholder="패스워드" pattern="[A-Za-z0-9]{4,15}" title="패스워드는 4~15자리의 영어와 숫자만 가능합니다." minlength="4" maxlength="15">
+                        <span class="toggle-password"></span>
+                    </div>
+                </div>
+                <div class="password-container">
+                    <div class="input-group">
+                        <i class='bx bxs-lock-alt'></i>
+                        <input type="password" id="password2" placeholder="패스워드 확인" pattern="[A-Za-z0-9]{4,15}" title="패스워드는 4~15자리의 영어와 숫자만 가능합니다." minlength="4" maxlength="15">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="securityQuestion">본인 확인 질문을 선택하세요</label>
+                    <select id="securityQuestion" name="securityQuestion" onchange="setAnswerInputName()" style ="font-size: 15px;">
+                        <option value="highschool">출신 고등학교 이름은 무엇인가요?</option>
+                        <option value="person">어렸을 때 존경했던 인물은 누구인가요?</option>
+                        <option value="alias">어릴 적 별명은 무엇이었나요?</option>
+                        <option value="travel">가장 인상 깊었던 여행지는 어디인가요?</option>
+                        <option value="movie">가장 좋아하는 영화는 무엇인가요?</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <i class='bx bxs-lock-alt'></i>
+                    <input type="text" id="securityAnswer" placeholder="질문의 답변을 입력하세요" name="highschool">
+                </div>
+                <button type="submit">회원가입</button>
+            </form>
+        </div>
+    </div>
+    <script src="/js/jscripts.js"></script>
 </body>
 </html>
 

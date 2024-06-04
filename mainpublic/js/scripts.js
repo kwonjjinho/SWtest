@@ -13,7 +13,16 @@ const chatForm = document.getElementById('chat-form');
 const messageInput = document.getElementById('chat-message');
 const usernameInput = document.getElementById('username');
 const messages = document.getElementById('messages');
+const chatContainer = document.getElementById('toggle-chat');
+const toggleChatBtn = document.getElementById('toggle-chat-btn');
+const openText = toggleChatBtn.dataset.openText;
 
+toggleChatBtn.addEventListener('click', () => {
+    const isVisible = chatContainer.style.display === 'block';
+    chatContainer.style.display = isVisible ? 'none' : 'block';
+    toggleChatBtn.textContent = isVisible ? openText : '닫기';
+    toggleChatBtn.classList.toggle('small', !isVisible);
+});
 chatForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const username = usernameInput.value.trim();
@@ -33,5 +42,5 @@ socket.on('chat message', function(msg) {
     const item = document.createElement('li');
     item.textContent = msg;
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
 });
+

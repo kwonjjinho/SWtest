@@ -1,0 +1,52 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-image: url('mainback.png'); /* 전체 배경 이미지 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+canvas {
+    border: 2px solid #000;
+    position: relative;
+}
+
+#buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 500px; /* 버튼 사이 간격을 넓힘 */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#mainButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#pauseButton, #resumeButton, #restartButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
