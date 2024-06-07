@@ -371,18 +371,16 @@ app.delete('/api/img/:id', (req, res) => {
         }
     });
 });
+
 //사진게시판
 const multer = require('multer');
 const cors = require('cors');
-const fs = require('fs');
 
 const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -391,8 +389,8 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
-    const title = req.body.title.replace(/\s+/g, '-');
-    const ext = path.extname(file.originalname);
+    const title = req.body.title.replace(/\s+/g, '-'); // 제목의 공백을 대시(-)로 변경
+    const ext = path.extname(file.originalname); // 파일 확장자 추출
     cb(null, `${title}${ext}`);
   }
 });
@@ -428,7 +426,6 @@ app.post('/rate', (req, res) => {
     res.status(404).send('Image not found!');
   }
 });
-
 
 
 app.use(express.urlencoded({ extended: true }));
