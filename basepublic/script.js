@@ -1,6 +1,36 @@
 let attempts = 10; // 남은 횟수를 저장하는 변수
 let guessCount = 0; // 추측 횟수를 저장하는 변수
 
+// 로그인 상태를 확인하는 함수
+function checkLoginStatus() {
+    fetch('/api/check-login')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // 로그인하지 않은 경우 게임 시작 버튼과 입력 필드 비활성화
+                document.getElementById('guessButton').disabled = true;
+                document.getElementById('guessInput').disabled = true;
+                document.getElementById('errorMessage').textContent = '로그인 필요: 게임을 시작하려면 로그인해야 합니다.';
+                document.getElementById('errorMessage').style.display = 'block';
+                alert('게임을 시작하려면 로그인해야 합니다.');
+                // 필요시 로그인 페이지로 리디렉션
+                // window.location.href = '/login.html';
+            } else {
+                // 로그인된 경우 게임 시작 버튼과 입력 필드를 활성화
+                document.getElementById('guessButton').disabled = false;
+                document.getElementById('guessInput').disabled = false;
+            }
+        })
+        .catch(err => {
+            console.error('Error checking login status:', err);
+        });
+}
+
+// 페이지 로드 시 로그인 상태 확인
+window.onload = function() {
+    checkLoginStatus();
+};
+
 // "추측하기" 버튼 클릭 시 makeGuess 함수를 호출하도록 이벤트 리스너 추가
 document.getElementById('guessButton').addEventListener('click', () => {
     makeGuess();
@@ -28,13 +58,21 @@ function hasDuplicateDigits(number) {
 // 사용자의 추측을 처리하는 함수
 function makeGuess() {
     const guess = document.getElementById('guessInput').value; // 입력된 추측 값을 가져옴
+    const errorMessage = document.getElementById('errorMessage'); // 오류 메시지 요소를 가져옴
+
+    // 오류 메시지를 초기화
+    errorMessage.style.display = 'none';
+    errorMessage.textContent = '';
+
     if (guess.length !== 4 || !/^\d+$/.test(guess)) { // 입력 값이 4자리 숫자인지 확인
-        alert('4자리 숫자를 입력하세요'); // 4자리 숫자가 아니면 경고 메시지 표시
+        errorMessage.textContent = '4자리 숫자를 입력하세요'; // 4자리 숫자가 아니면 오류 메시지 설정
+        errorMessage.style.display = 'block';
         return;
     }
     
     if (hasDuplicateDigits(guess)) { // 중복된 숫자가 있는지 확인
-        alert('중복된 숫자가 있습니다. 다시 입력하세요'); // 중복된 숫자가 있으면 경고 메시지 표시
+        errorMessage.textContent = '중복된 숫자가 있습니다. 다시 입력하세요'; // 중복된 숫자가 있으면 오류 메시지 설정
+        errorMessage.style.display = 'block';
         return;
     }
 

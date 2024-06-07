@@ -1,0 +1,71 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('./2048image/background.jpg');
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#mainButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+#startButton, #retryButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.cell {
+    background-color: white;
+    width: 100px;
+    float: left;
+    height: 101px;
+    display: flex;
+    border: 1px solid;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: black;
+}
+
+#score {
+    background-color: white;
+    padding: 10px;
+    font-size: 24px;
+    color: black;
+    border: 1px solid black;
+}
+
+#gameover-container {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}

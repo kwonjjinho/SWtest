@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>미니겜즈 문의 게시판</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Permanent+Marker&display=swap" rel="stylesheet">
     <style>
         /* 기존 스타일 코드 */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #fff;
             color: #333;
             text-align: center;
             background-size: cover;
+            font-family: "Gamja Flower", cursive;
+            font-size: 20px;
         }
 
         h1 {
@@ -92,11 +94,11 @@
             color: #000;
             padding: 10px;
         }
-        
+
         .logo {
             margin-left: 20px;
         }
-        
+
         .menu ul,
         .auth ul {
             list-style: none;
@@ -104,21 +106,24 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .menu li,
         .auth li {
             margin: 0 10px;
         }
-        
+
         .menu a,
         .auth a {
             color: #000;
             text-decoration: none;
         }
-        
+
         .auth {
             margin-right: 20px;
+            display: flex;
+            align-items: center;
         }
+
         .header-text {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
@@ -128,13 +133,101 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        
+
         .minion-header {
             margin-bottom: 20px;
         }
-        
+
         .minion-header img {
             max-width: 60%;
+        }
+
+        .auth-profile {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .auth-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        .logo a {
+            text-decoration: none; /* 추가 */
+        }
+        .logo h2 {
+            margin: 0;
+            font-family: "Gamja Flower", cursive;
+            cursor: pointer;
+            color: black; /* 프로필 파일의 디자인을 반영 */
+        }
+        .auth {
+        display: flex;
+        align-items: center; /* 모든 자식 요소를 수직 가운데 정렬 */
+        }
+
+         .auth ul {
+        display: flex;
+        align-items: center; /* 모든 리스트 아이템을 수직 가운데 정렬 */
+        margin: 0;
+        padding: 0;
+        }
+
+        .auth li {
+        list-style: none;
+        margin: 0 10px;
+        }
+        
+         /* 모달 스타일 추가 */
+         .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: rgb(255, 213, 4);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .menu a, .auth a { /* 눌렀을 때 스타일 추가*/
+            color: black;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+        .menu a:hover, .auth a:hover {
+            background-color: #555;
+            color: white;
         }
     </style>
 </head>
@@ -143,12 +236,12 @@
         <nav>
             <div class="logo">
                 <a href="/">
-                    <h2>Mini Gemz</h2>
+                    <h2>Mini Gamz</h2>
                 </a>
             </div>
             <div class="menu">
                 <ul>
-                    <li><a href="#community">커뮤니티</a></li>
+                    <li><a href="community.html">커뮤니티</a></li>
                     <li><a href="inquiry.html">문의 게시판</a></li>
                     <li><a href="#" id="profileLink">프로필</a></li>
                 </ul>
@@ -190,6 +283,17 @@
         <button onclick="hideNewPostForm()">취소</button>
     </div>
 
+    <!-- 모달 창 추가 -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>제목:<span id="modalTitle"></span></h2>
+            <p><strong>작성자:</strong> <span id="modalAuthor"></span></p>
+            <p>작성날짜: <span id="modalDate"></span></p>
+            <p>문의내용:<span id="modalContent"></span></p>
+        </div>
+    </div>
+
     <script>
         let posts = [];
 
@@ -199,10 +303,17 @@
                 .then(data => {
                     if (data.nickname) {
                         document.getElementById('authMenu').innerHTML = `
+                            <li class="auth-profile">
+                                <img src="${data.profileImage}" alt="Profile Image">
+                                <span>${data.nickname} (${data.points} 점)</span>
+                            </li>
                             <li><a href="#" id="logoutLink">로그아웃</a></li>
                         `;
                         document.getElementById('logoutLink').addEventListener('click', logout);
                         document.getElementById('newAuthor').textContent = data.nickname;
+                        document.getElementById('profileLink').addEventListener('click', () => {
+                            window.location.href = 'profile.html';
+                        });
                     } else {
                         document.getElementById('authMenu').innerHTML = `
                             <li><a href="login.html" id="loginLink">로그인</a></li>
@@ -215,15 +326,41 @@
                 });
         }
 
+        function formatDate(date) {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = ('0' + (d.getMonth() + 1)).slice(-2);
+            const day = ('0' + d.getDate()).slice(-2);
+            return `${year}-${month}-${day}`;
+        }
+
         function showNewPostForm() {
+            const author = document.getElementById('newAuthor').textContent;
+            if (!author) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'login.html';
+                return;
+            }
             document.getElementById('newPostForm').style.display = 'block';
-            // 새 글 작성 폼이 표시된 후 밑으로 스크롤
             document.getElementById('newPostForm').scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
 
         function hideNewPostForm() {
             document.getElementById('newPostForm').style.display = 'none';
+            resetPostForm();
         }
+        
+        function resetPostForm() {
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newContent').value = '';
+        
+            const submitButton = document.querySelector('#newPostForm button:first-of-type');
+            submitButton.textContent = '작성';
+            submitButton.onclick = addPost;
+        }
+        
+        // 나머지 코드 생략...
+        
 
         function addPost() {
             const title = document.getElementById('newTitle').value;
@@ -232,53 +369,157 @@
             const date = new Date().toISOString().split('T')[0];
 
             const post = {
-                id: Date.now(),
                 title,
                 author,
                 content,
                 date
             };
 
-            posts.push(post);
-            renderPosts();
-            hideNewPostForm();
+            fetch('/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(post)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to add post');
+                }
+            })
+            .then(data => {
+                posts.push({ ...post, id: data.id });
+                renderPosts();
+                hideNewPostForm();
+            })
+            .catch(error => {
+                console.error('Error adding post:', error);
+            });
+            window.location.reload()
         }
 
         function renderPosts() {
             const postsContainer = document.getElementById('posts');
             postsContainer.innerHTML = '';
             posts.forEach((post, index) => {
+                const editButton = `<button onclick="editPost(${post.id}, '${post.author}')">수정</button>`;
+                const deleteButton = `<button onclick="deletePost(${post.id}, '${post.author}')">삭제</button>`;
                 postsContainer.innerHTML += `
                     <tr>
-                        <td>${index + 1}</td>
-                        <td>${post.title}</td>
-                        <td>${post.author}</td>
-                        <td>${post.date}</td>
+                        <td><a href="#" onclick="showPost(${post.id})">${index + 1}</a></td>
+                        <td><a href="#" onclick="showPost(${post.id})">${post.title}</a></td>
+                        <td><a href="#" onclick="showPost(${post.id})">${post.author}</a></td>
+                        <td><a href="#" onclick="showPost(${post.id})">${formatDate(post.date)}</a></td>
                         <td>
-                            <button onclick="editPost(${post.id})">수정</button>
-                            <button onclick="deletePost(${post.id})">삭제</button>
+                            ${post.author === document.getElementById('newAuthor').textContent ? editButton : ''}
+                            ${post.author === document.getElementById('newAuthor').textContent ? deleteButton : ''}
                         </td>
                     </tr>
                 `;
             });
         }
 
-        function deletePost(id) {
-            posts = posts.filter(post => post.id !== id);
-            renderPosts();
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            return new Date(dateString).toLocaleDateString('ko-KR', options);
         }
 
-        function editPost(id) {
+        function showPost(id) {
             const post = posts.find(post => post.id === id);
             if (post) {
-                document.getElementById('newTitle').value = post.title;
-                document.getElementById('newAuthor').textContent = post.author;
-                document.getElementById('newContent').value = post.content;
-                deletePost(id);
-                showNewPostForm();
+                document.getElementById('modalTitle').textContent = post.title;
+                document.getElementById('modalAuthor').textContent = post.author;
+                document.getElementById('modalDate').textContent = formatDate(post.date);
+                document.getElementById('modalContent').textContent = post.content;
+                document.getElementById('postModal').style.display = 'block';
             }
         }
 
+        function closeModal() {
+            document.getElementById('postModal').style.display = 'none';
+        }
+
+        function deletePost(id, author) {
+            const currentUser = document.getElementById('newAuthor').textContent;
+            if (author !== currentUser) {
+                alert('자신이 작성한 글만 삭제할 수 있습니다.');
+                return;
+            }
+        
+            fetch(`/api/posts/${id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        posts = posts.filter(post => post.id !== id);
+                        renderPosts();
+                    } else {
+                        throw new Error('Failed to delete post');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting post:', error);
+                });
+        }
+
+        function editPost(id, author) {
+            const currentUser = document.getElementById('newAuthor').textContent;
+            if (author !== currentUser) {
+                alert('자신이 작성한 글만 수정할 수 있습니다.');
+                return;
+            }
+    
+            const post = posts.find(post => post.id === id);
+            if (post) {
+                document.getElementById('newTitle').value = post.title;
+                document.getElementById('newContent').value = post.content;
+    
+                // 수정 폼의 버튼 텍스트와 클릭 이벤트 변경
+                const submitButton = document.querySelector('#newPostForm button:first-of-type');
+                submitButton.textContent = '수정';
+                submitButton.onclick = () => updatePost(id);
+    
+                showNewPostForm();
+            }
+        }
+    
+        function updatePost(id) {
+            const title = document.getElementById('newTitle').value;
+            const author = document.getElementById('newAuthor').textContent;
+            const content = document.getElementById('newContent').value;
+            const date = new Date().toISOString().split('T')[0];
+    
+            const updatedPost = {
+                title,
+                author,
+                content,
+                date
+            };
+    
+            fetch(`/api/posts/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedPost)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update post');
+                }
+            })
+            .then(() => {
+                posts = posts.map(post => post.id === id ? { ...post, ...updatedPost } : post);
+                renderPosts();
+                hideNewPostForm();
+            })
+            .catch(error => {
+                console.error('Error updating post:', error);
+            });
+        }
+        
         function logout() {
             fetch('/logout', { method: 'POST' })
                 .then(response => {
@@ -289,15 +530,22 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Error during logout:', error
-);
+                    console.error('Error during logout:', error);
                 });
         }
 
-        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            fetch('/api/posts')
+                .then(response => response.json())
+                .then(data => {
+                    posts = data;
+                    renderPosts();
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        });
     </script>
 </body>
 </html>
-
-
-

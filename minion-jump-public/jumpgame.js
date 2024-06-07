@@ -32,9 +32,9 @@ const platformImg = new Image();
 platformImg.src = 'jumpimg/platform.png';
 
 // 사운드 로드
-const jumpSound = new Audio('jumpimg/jumpsounds/jump.mp3');
-const bgmSound = new Audio('jumpimg/jumpsounds/gamebgm.mp3');
-const hitSound = new Audio('jumpimg/jumpsounds/gameover.mp3');
+const jumpSound = new Audio('jumpsounds/jump.mp3');
+const bgmSound = new Audio('jumpsounds/gamebgm.mp3');
+const hitSound = new Audio('jumpsounds/gameover.mp3');
 bgmSound.loop = true; // 배경 음악 반복 재생
 
 // 플레이어 캐릭터 설정
@@ -304,24 +304,6 @@ function endGame() {
     restartButton.style.display = 'none';
 }
 
-// 랭킹 데이터 가져오기
-function fetchRankings() {
-    fetch('/rankings')
-        .then(response => response.json())
-        .then(data => {
-            displayRankings(data);
-        });
-}
-
-// 랭킹 표시 함수
-function displayRankings(rankings) {
-    const rankingsDiv = document.getElementById('rankings');
-    rankingsDiv.innerHTML = '<h2>Top 10 Rankings</h2>';
-    rankings.forEach((entry, index) => {
-        rankingsDiv.innerHTML += `<p>${index + 1}. ${entry.name} - ${entry.score}</p>`;
-    });
-}
-
 // 게임 초기화 함수
 function resetGame() {
     platforms.length = 0; // 플랫폼 배열 초기화
@@ -356,4 +338,21 @@ allImagesLoaded(() => {
 
     // 처음에 몇 개의 플랫폼을 생성하여 플레이어가 그 위에서 시작할 수 있도록 함
     resetGame();
+    
+    // 로그인 상태 확인
+    fetch('/api/check-login')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // 로그인하지 않은 경우 게임 시작 버튼 비활성화
+                startButton.disabled = true;
+                startButton.textContent = '로그인 필요';
+                alert('게임을 시작하려면 로그인해야 합니다.');
+                // 필요시 로그인 페이지로 리디렉션
+                // window.location.href = '/login.html';
+            }
+        })
+        .catch(err => {
+            console.error('Error checking login status:', err);
+        });
 });

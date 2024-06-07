@@ -275,8 +275,26 @@ function gameLoop() {
     }
 }
 
+// 페이지가 로드될 때 로그인 상태를 확인
+window.onload = function() {
+    fetch('/api/check-login')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // 로그인하지 않은 경우 게임 시작 버튼 비활성화
+                startButton.disabled = true;
+                startButton.textContent = '로그인 필요';
+                alert('게임을 시작하려면 로그인해야 합니다.');
+                // 필요시 로그인 페이지로 리디렉션
+                // window.location.href = '/login.html';
+            }
+        })
+        .catch(err => {
+            console.error('Error checking login status:', err);
+        });
+};
+
 // 모든 이미지가 로드된 후 게임을 시작
 allImagesLoaded(() => {
     startButton.style.display = 'block';
 });
-

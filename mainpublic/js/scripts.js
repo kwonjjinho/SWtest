@@ -25,6 +25,10 @@ toggleChatBtn.addEventListener('click', () => {
 });
 chatForm.addEventListener('submit', function(event) {
     event.preventDefault();
+    if (!isLoggedIn) {  //로그인여부확인 팝업전송
+        showLoginPopup();
+        return;
+    }
     const username = usernameInput.value.trim();
     const message = messageInput.value.trim();
     console.log(`전송 버튼 클릭됨. 유저명: ${username}, 메시지: ${message}`);
@@ -56,6 +60,12 @@ app.post('/logout', (req, res) => {
             return res.status(500).send('Logout failed');
         }
         res.send('Logged out');
+    });
+    app.post('/login', (req, res) => {
+        req.session.user = {
+            nickname: '사용자 닉네임'
+        };
+        res.redirect('/');
     });
 });
 
