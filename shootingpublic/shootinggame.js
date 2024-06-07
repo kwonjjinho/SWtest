@@ -29,6 +29,12 @@ potionImage.src = 'shootingimages/potion.png'; // 포션 이미지 경로 설정
 const backgroundImage = new Image(); // 배경 이미지 객체 생성
 backgroundImage.src = 'shootingimages/background.png'; // 배경 이미지 경로 설정
 
+const mainButton = document.getElementById('mainButton'); // Main 버튼 요소 가져오기
+
+mainButton.addEventListener('click', () => {
+  window.location.href = '/'; // index.html로 이동
+});
+
 const bullets = []; // 총알 배열 생성
 const enemies = []; // 적 배열 생성
 const items = []; // 아이템 배열 생성
@@ -52,6 +58,31 @@ const fullHeart = '❤️'; // 꽉찬 하트 이모지
 const emptyHeart = '🤍'; // 빈 하트 이모지
 
 startButton.addEventListener('click', startGame); // 시작 버튼 클릭 이벤트 리스너 추가
+
+function checkLoginStatus() {
+    fetch('/api/check-login')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // 로그인하지 않은 경우 게임 시작 버튼 비활성화
+                startButton.disabled = true;
+                startButton.textContent = '로그인 필요';
+                alert('게임을 시작하려면 로그인해야 합니다.');
+            } else {
+                // 로그인된 경우 게임 시작 버튼 활성화
+                startButton.disabled = false;
+                startButton.textContent = '게임 시작';
+            }
+        })
+        .catch(err => {
+            console.error('Error checking login status:', err);
+        });
+}
+
+// 페이지 로드 시 로그인 상태 확인
+window.onload = function() {
+    checkLoginStatus();
+};
 
 function startGame() {
   startButton.style.display = 'none'; // 시작 버튼 숨기기
@@ -93,6 +124,47 @@ function drawPotions() { // 포션 그리기 함수
   });
 }
 
+// 적 생성 함수 추가
+function spawnEnemy() {
+  const enemyWidth = 80;
+  const enemyHeight = 80;
+  const maxAttempts = 10; // 최대 시도 횟수 설정
+
+  for (let i = 0; i < 5; i++) { // 한 번에 여러 적 생성
+    let x, y;
+    let overlapping;
+    let attempts = 0;
+
+    do {
+      x = Math.random() * (canvas.width - enemyWidth); // 적의 x 위치 랜덤 설정
+      y = 0; // 적의 y 위치 초기화
+      overlapping = false;
+
+      for (const enemy of enemies) { // 기존 적들과의 충돌 검사
+        if (x < enemy.x + enemy.width &&
+            x + enemyWidth > enemy.x &&
+            y < enemy.y + enemyHeight &&
+            y + enemyHeight > enemy.y) {
+          overlapping = true;
+          break;
+        }
+      }
+
+      attempts++;
+    } while (overlapping && attempts < maxAttempts); // 충돌이 없을 때까지 또는 최대 시도 횟수까지 반복
+
+    if (!overlapping) {
+      enemies.push({ // 새로운 적 추가
+        x: x,
+        y: y,
+        width: enemyWidth,
+        height: enemyHeight,
+        dy: 3 // 적의 이동 속도
+      });
+    }
+  }
+}
+
 function drawScore() { // 점수 그리기 함수
   ctx.fillStyle = 'white'; // 점수 색상 설정
   ctx.font = '20px Arial'; // 점수 글꼴 설정
@@ -120,8 +192,8 @@ function drawGameOver() { // 게임 오버 메시지 그리기 함수
   // canvas의 위치를 기준으로 버튼 위치 설정
   const rect = canvas.getBoundingClientRect();
   retryButton.style.position = 'absolute'; // 버튼 위치 설정
-  retryButton.style.left = `${rect.left + canvas.width / 2 + 50}px`; // 버튼 x 위치 설정 (canvas 기준 오른쪽으로 이동)
-  retryButton.style.top = `${rect.top + canvas.height / 2 + 100}px`; // 버튼 y 위치 설정 (canvas 기준 아래로 이동)
+  retryButton.style.left = `${rect.left + canvas.width / 2 - 70}px`; // 버튼 x 위치 설정 (canvas 기준 오른쪽으로 이동)
+  retryButton.style.top = `${rect.top + canvas.height / 2 }px`; // 버튼 y 위치 설정 (canvas 기준 아래로 이동)
 
   retryButton.style.padding = '10px 20px'; // 버튼 패딩 설정
   retryButton.style.fontSize = '20px'; // 버튼 글꼴 크기 설정
@@ -234,33 +306,24 @@ function update() { // 게임 업데이트 함수
         drawGameOver(); // 게임 오버 메시지 그리기
         gameOver = true; // 게임 오버 상태 설정
         clearInterval(bulletInterval); // 총알 발사 인터벌 제거
-        clearInterval(itemInterval); // 아이템 생성 인터벌 제거
-        clearInterval(potionInterval); // 포션 생성 인터벌 제거
+        clearInterval(gameInterval); // 게임 인터벌 제거
       }
     }
   });
 
   const now = Date.now(); // 현재 시간 가져오기
-  if (now - lastEnemySpawn > enemySpawnInterval) { // 적 생성 간격이 지났을 경우
-    for (let i = 0; i < 3; i++) { // 한 번에 여러 적 생성
-      enemies.push({ // 새로운 적 추가
-        x: Math.random() * (canvas.width - 30), // 적의 x 위치 랜덤 설정
-        y: 0, // 적의 y 위치 초기화
-        width: 60, // 적의 너비
-        height: 60, // 적의 높이
-        dy: 2 // 적의 이동 속도
-      });
-    }
-    lastEnemySpawn = now; // 마지막 적 생성 시간 업데이트
-    gameSpeed += 0.1; // 게임 속도 증가
-  }
+if (now - lastEnemySpawn > enemySpawnInterval) {
+  spawnEnemy(); // 적 생성 함수 호출
+  lastEnemySpawn = now; // 마지막 적 생성 시간 업데이트
+  gameSpeed += 0.1; // 게임 속도 증가
+}
 
   if (now - lastItemSpawn > itemSpawnInterval && itemsCollected < 2) { // 아이템 생성 간격이 지났고 아이템을 2개 이하로 수집했을 경우
     items.push({ // 새로운 아이템 추가
       x: Math.random() * (canvas.width - 30), // 아이템의 x 위치 랜덤 설정
       y: 0, // 아이템의 y 위치 초기화
-      width: 30, // 아이템의 너비
-      height: 30, // 아이템의 높이
+      width: 60, // 아이템의 너비
+      height: 60, // 아이템의 높이
       dy: 2 // 아이템의 이동 속도
     });
     lastItemSpawn = now; // 마지막 아이템 생성 시간 업데이트
@@ -270,8 +333,8 @@ function update() { // 게임 업데이트 함수
     potions.push({ // 새로운 포션 추가
       x: Math.random() * (canvas.width - 30), // 포션의 x 위치 랜덤 설정
       y: 0, // 포션의 y 위치 초기화
-      width: 30, // 포션의 너비
-      height: 30, // 포션의 높이
+      width: 100, // 포션의 너비
+      height: 100, // 포션의 높이
       dy: 2 // 포션의 이동 속도
     });
     lastPotionSpawn = now; // 마지막 포션 생성 시간 업데이트
